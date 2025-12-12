@@ -1,17 +1,78 @@
-<div id="countdownApp" style="max-width:420px;margin:0 auto;">
-  <button id="startBtn"
-    style="width:100%;border:0;border-radius:14px;padding:14px 18px;
-           font-weight:800;background:#6d5efc;color:#fff;font-size:16px;">
-    시작
-  </button>
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GSAP 카운트다운</title>
+  <style>
+    body { margin:0; font-family:system-ui; display:grid; place-items:center; min-height:100vh; background:#0b0c10; color:#e9eef6; }
+    button { border:0; border-radius:14px; padding:14px 18px; font-weight:800; background:#6d5efc; color:#fff; font-size:16px; }
+    .overlay {
+      position:fixed; inset:0; display:none; place-items:center;
+      background:rgba(0,0,0,.55); backdrop-filter: blur(4px);
+    }
+    .num {
+      font-size:72px; font-weight:900; line-height:1;
+      transform: scale(0.6);
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <button id="startBtn">시작</button>
 
-  <div id="cdOverlay"
-    style="position:fixed;inset:0;display:none;place-items:center;
-           background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:9999;">
-    <div id="cdNum"
-      style="font-size:72px;font-weight:900;line-height:1;
-             transform:scale(.6);opacity:0;color:#fff;">
-      3
-    </div>
+  <div class="overlay" id="overlay">
+    <div class="num" id="num">3</div>
   </div>
-</div>
+
+  <!-- GSAP CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script>
+    const startBtn = document.getElementById("startBtn");
+    const overlay = document.getElementById("overlay");
+    const numEl = document.getElementById("num");
+
+    let running = false;
+
+    function runAfterCountdown() {
+      document.dispatchEvent(new CustomEvent("re_cat", {
+    detail: { from: "countdown", ts: Date.now() }
+  }));
+
+    }
+
+    function countdown3_2_1(onDone) {
+      if (running) return;
+      running = true;
+
+      overlay.style.display = "grid";
+      const tl = gsap.timeline({
+        defaults: { ease: "power2.out" },
+        onComplete: () => {
+          overlay.style.display = "none";
+          running = false;
+          onDone?.();
+        }
+      });
+
+      [3, 2, 1].forEach((n) => {
+        tl.call(() => { numEl.textContent = n; })
+          .fromTo(numEl,
+            { opacity: 0, scale: 0.6 },
+            { opacity: 1, scale: 1, duration: 0.18 }
+          )
+          .to(numEl,
+            { opacity: 0, scale: 1.25, duration: 0.22 },
+            "+=0.38" // 숫자 유지 시간
+          );
+      });
+
+      return tl;
+    }
+
+    startBtn.addEventListener("click", () => {
+      countdown3_2_1(runAfterCountdown);
+    });
+  </script>
+</body>
+</html>
