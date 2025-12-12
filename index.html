@@ -6,127 +6,36 @@
   <title>1~25 타임어택</title>
   <style>
     :root { --gap: 10px; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
-      background: #0b0c10;
-      color: #e9eef6;
-    }
-    .app {
-      max-width: 420px;              /* 모바일 폭 느낌 */
-      margin: 0 auto;
-      min-height: 100svh;
-      padding: 16px 16px 24px;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .card {
-      background: #121522;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px;
-      padding: 14px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-    }
-    .top {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .stat h3 {
-      margin: 0 0 6px;
-      font-size: 12px;
-      opacity: 0.75;
-      font-weight: 600;
-      letter-spacing: 0.2px;
-    }
-    .stat .value {
-      font-size: 22px;
-      font-weight: 800;
-    }
-    .row {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-    button.ctrl {
-      appearance: none;
-      border: 0;
-      border-radius: 12px;
-      padding: 12px 14px;
-      font-weight: 800;
-      background: #6d5efc;
-      color: white;
-      cursor: pointer;
-    }
-    button.ctrl:active { transform: translateY(1px); }
-    button.ctrl.secondary {
-      background: rgba(255,255,255,0.12);
-    }
-
-    .hint {
-      font-size: 12px;
-      opacity: 0.8;
-      line-height: 1.4;
-      margin: 0;
-    }
-
-    .gridWrap { flex: 1; display: flex; }
-    .grid {
-      width: 100%;
-      aspect-ratio: 1 / 1;           /* 정사각형 보드 */
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: var(--gap);
-    }
-
+    body { margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans KR",sans-serif; background:#0b0c10; color:#e9eef6; }
+    .app { max-width:420px; margin:0 auto; min-height:100svh; padding:16px 16px 24px; box-sizing:border-box; display:flex; flex-direction:column; gap:12px; }
+    .card { background:#121522; border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:14px; box-shadow:0 8px 24px rgba(0,0,0,0.25); }
+    .top { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .stat h3 { margin:0 0 6px; font-size:12px; opacity:.75; font-weight:600; letter-spacing:.2px; }
+    .stat .value { font-size:22px; font-weight:800; }
+    .row { display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+    button.ctrl { appearance:none; border:0; border-radius:12px; padding:12px 14px; font-weight:800; background:#6d5efc; color:#fff; cursor:pointer; }
+    button.ctrl:active { transform:translateY(1px); }
+    button.ctrl.secondary { background:rgba(255,255,255,0.12); }
+    .hint { font-size:12px; opacity:.8; line-height:1.4; margin:0; }
+    .gridWrap { flex:1; display:flex; }
+    .grid { width:100%; aspect-ratio:1/1; display:grid; grid-template-columns:repeat(5,1fr); gap:var(--gap); }
     .cell {
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: #171a2a;
-      color: #e9eef6;
-      font-weight: 900;
-      font-size: clamp(14px, 4.2vw, 20px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      cursor: pointer;
+      border-radius:14px; border:1px solid rgba(255,255,255,0.10); background:#171a2a; color:#e9eef6;
+      font-weight:900; font-size:clamp(14px,4.2vw,20px);
+      display:flex; align-items:center; justify-content:center;
+      user-select:none; -webkit-tap-highlight-color:transparent; cursor:pointer;
     }
-    .cell:active { transform: scale(0.99); }
-
-    .cell.done {
-      opacity: 0.35;
-      background: rgba(255,255,255,0.06);
-    }
-    .cell.next {
-      outline: 3px solid rgba(109,94,252,0.85);
-      outline-offset: 0px;
-    }
-
+    .cell:active { transform:scale(0.99); }
+    .cell.done { opacity:.35; background:rgba(255,255,255,0.06); }
+    .cell.next { outline:3px solid rgba(109,94,252,0.85); outline-offset:0; }
     .toast {
-      position: fixed;
-      left: 50%;
-      bottom: 18px;
-      transform: translateX(-50%);
-      background: rgba(20,22,32,0.95);
-      border: 1px solid rgba(255,255,255,0.12);
-      padding: 10px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 160ms ease;
-      max-width: 92vw;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
+      background:rgba(20,22,32,0.95); border:1px solid rgba(255,255,255,0.12);
+      padding:10px 12px; border-radius:999px; font-size:13px;
+      opacity:0; pointer-events:none; transition:opacity 160ms ease;
+      max-width:92vw; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     }
-    .toast.show { opacity: 1; }
+    .toast.show { opacity:1; }
   </style>
 </head>
 <body>
@@ -152,8 +61,8 @@
           다음 숫자: <span id="nextNum">1</span>
         </div>
       </div>
-      <p class="hint" id="hint">
-        1부터 25까지 순서대로 눌러보세요. 오답을 누르면 <b>1부터 다시</b> 시작합니다.
+      <p class="hint">
+        1부터 25까지 순서대로 눌러보세요. 오답을 누르면 <b>1부터 다시</b> 시작합니다(추가 시간 벌점 없음).
       </p>
     </div>
 
@@ -164,235 +73,7 @@
 
   <div class="toast" id="toast"></div>
 
-  <script type="module">
-    /*********************
-     *  Firebase 설정 (너 프로젝트로 바꿔줘!)
-     *********************/
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID",
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    /*********************
-     *  게임 로직
-     *********************/
-    const gridEl = document.getElementById("grid");
-    const timeNowEl = document.getElementById("timeNow");
-    const timeBestEl = document.getElementById("timeBest");
-    const nextNumEl = document.getElementById("nextNum");
-    const toastEl = document.getElementById("toast");
-
-    const btnRestart = document.getElementById("btnRestart");
-    const btnHow = document.getElementById("btnHow");
-
-    const LS_BEST = "numberGame_bestMs_v1";
-    const LS_DEVICE = "numberGame_deviceId_v1";
-
-    const state = {
-      next: 1,
-      started: false,
-      startAt: 0,
-      raf: 0,
-      bestMs: null,
-      numbers: [],
-      doneSet: new Set(),
-      completed: false,
-    };
-
-    function getDeviceId() {
-      let id = localStorage.getItem(LS_DEVICE);
-      if (!id) {
-        // 간단한 랜덤 ID (기기/브라우저 단위)
-        id = "dev_" + Math.random().toString(36).slice(2) + "_" + Date.now().toString(36);
-        localStorage.setItem(LS_DEVICE, id);
-      }
-      return id;
-    }
-
-    function formatMs(ms) {
-      const s = ms / 1000;
-      return s.toFixed(2) + "s";
-    }
-
-    function showToast(msg) {
-      toastEl.textContent = msg;
-      toastEl.classList.add("show");
-      clearTimeout(showToast._t);
-      showToast._t = setTimeout(() => toastEl.classList.remove("show"), 1200);
-    }
-
-    function shuffle(arr) {
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-    }
-
-    function loadBest() {
-      const v = localStorage.getItem(LS_BEST);
-      state.bestMs = v ? Number(v) : null;
-      timeBestEl.textContent = state.bestMs ? formatMs(state.bestMs) : "--";
-    }
-
-    function saveBestLocal(ms) {
-      localStorage.setItem(LS_BEST, String(ms));
-      state.bestMs = ms;
-      timeBestEl.textContent = formatMs(ms);
-    }
-
-    function stopTimer() {
-      cancelAnimationFrame(state.raf);
-      state.raf = 0;
-    }
-
-    function tick() {
-      if (!state.started) return;
-      const now = performance.now();
-      const ms = now - state.startAt;
-      timeNowEl.textContent = formatMs(ms);
-      state.raf = requestAnimationFrame(tick);
-    }
-
-    function startTimerIfNeeded() {
-      if (state.started) return;
-      state.started = true;
-      state.startAt = performance.now();
-      tick();
-    }
-
-    function resetGame({ reshuffle = true } = {}) {
-      stopTimer();
-      state.started = false;
-      state.startAt = 0;
-      timeNowEl.textContent = "0.00s";
-
-      state.next = 1;
-      state.completed = false;
-      state.doneSet = new Set();
-
-      nextNumEl.textContent = String(state.next);
-
-      const nums = Array.from({ length: 25 }, (_, i) => i + 1);
-      state.numbers = reshuffle ? shuffle(nums) : nums; // 기본은 섞기
-      renderGrid();
-    }
-
-    function renderGrid() {
-      gridEl.innerHTML = "";
-      for (const n of state.numbers) {
-        const btn = document.createElement("div");
-        btn.className = "cell";
-        btn.textContent = String(n);
-        btn.dataset.num = String(n);
-
-        // 다음 눌러야 할 숫자 강조(현재 그 숫자가 아직 안 눌린 상태일 때)
-        if (n === state.next) btn.classList.add("next");
-
-        btn.addEventListener("click", () => onPressNumber(n));
-        gridEl.appendChild(btn);
-      }
-    }
-
-    function updateCellStyles() {
-      const cells = gridEl.querySelectorAll(".cell");
-      cells.forEach((c) => {
-        const n = Number(c.dataset.num);
-
-        c.classList.toggle("done", state.doneSet.has(n));
-        c.classList.toggle("next", n === state.next && !state.doneSet.has(n));
-      });
-    }
-
-    async function onFinish(finalMs) {
-      stopTimer();
-      state.completed = true;
-
-      const isNewBest = state.bestMs == null || finalMs < state.bestMs;
-
-      if (isNewBest) {
-        saveBestLocal(finalMs);
-        showToast("🎉 신기록! " + formatMs(finalMs));
-      } else {
-        showToast("완료! " + formatMs(finalMs));
-      }
-
-      // Firestore 저장 (신기록일 때만 업데이트)
-      if (isNewBest) {
-        const deviceId = getDeviceId();
-        const ref = doc(db, "number_score", deviceId);
-
-        try {
-          await setDoc(ref, {
-            deviceId,
-            bestMs: finalMs,
-            bestSec: Number((finalMs / 1000).toFixed(2)),
-            updatedAt: serverTimestamp(),
-            game: "number_1to25",
-          }, { merge: true });
-
-          // showToast("클라우드 저장됨");
-        } catch (err) {
-          console.error(err);
-          showToast("저장 실패(콘솔 확인)");
-        }
-      }
-    }
-
-    function onPressNumber(n) {
-      if (state.completed) return;
-
-      // 정답이면 진행
-      if (n === state.next) {
-        // 타이머는 1번을 처음 눌렀을 때 시작
-        if (n === 1) startTimerIfNeeded();
-
-        state.doneSet.add(n);
-        state.next += 1;
-        nextNumEl.textContent = state.next <= 25 ? String(state.next) : "완료!";
-        updateCellStyles();
-
-        if (n === 25) {
-          const finalMs = performance.now() - state.startAt;
-          timeNowEl.textContent = formatMs(finalMs);
-          onFinish(finalMs);
-        }
-        return;
-      }
-
-      // 오답이면: "처음부터" (시간 페널티 없음 = 추가 가산 없음)
-      // 여기서는 진행만 1로 리셋, 타이머는 계속 흐르게(벌점 없이) 유지
-      // 원하면 "타이머도 리셋"으로 바꿀 수도 있어.
-      state.doneSet.clear();
-      state.next = 1;
-      nextNumEl.textContent = "1";
-      updateCellStyles();
-      showToast("오답! 1부터 다시");
-    }
-
-    btnRestart.addEventListener("click", () => {
-      resetGame({ reshuffle: true });
-      showToast("리셋 & 섞기");
-    });
-
-    btnHow.addEventListener("click", () => {
-      showToast("1→25 순서 클릭! 오답이면 1부터 다시");
-    });
-
-    // 초기화
-    loadBest();
-    resetGame({ reshuffle: true });
-    getDeviceId();
-  </script>
+  <!-- ✅ app.js를 ES module로 로드 -->
+  <script type="module" src="./app.js"></script>
 </body>
 </html>
